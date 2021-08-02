@@ -23,6 +23,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/vueToastNotification.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -44,8 +45,14 @@ export default {
     '@nuxtjs/pwa',
   ],
 
+  env: {
+    SUPABASE_API_KEY: process.env.SUPABASE_KEY,
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'https://idvimabocsqirppexpvw.supabase.co/rest/v1/',
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
