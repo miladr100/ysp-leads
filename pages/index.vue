@@ -25,18 +25,29 @@
         <form v-if="!showButton && !isSubscribed" class="form-m d-flex flex-column">
           <div class="d-flex align-center justify-space-between">
             <label class="label-m" for="name">Nome</label>
-            <input id="name" v-model="name" class="input-m" type="text" name="name" placeholder="Digite seu nome completo">
+            <input id="name" v-model="form.name" style="width: 100%;" class="input-m" type="text" name="name" placeholder="Digite seu nome completo">
           </div>
           <div class="d-flex align-center justify-space-between">
             <label class="label-m" for="email">Email</label>
-            <input id="email" v-model="email" class="input-m" type="text" name="email" placeholder="Digite seu melhor email">
+            <input id="email" v-model="form.email" style="width: 100%;" class="input-m" type="text" name="email" placeholder="Digite seu melhor email">
+          </div>
+          <div class="d-flex align-center justify-space-between">
+            <select id="state" v-model="form.state" class="select-state select-state-m" name="state" form="stateform">
+              <option value="" disabled="disabled" selected="selected">Estado</option>
+              <option v-for="(state, i) in allStates" :key="i" :value="state.value">{{state.short}}</option>
+            </select>
+
+            <select id="city" v-model="form.city" :disabled="allCities.length == 0" style="width: 100%;" class="select-state select-state-m" name="city" form="stateform">
+              <option value="" disabled="disabled" selected="selected">Cidade</option>
+              <option v-for="(city, i) in allCities" :key="i" :value="city.value">{{city.value}}</option>
+            </select>
           </div>
         </form>
         <p v-if="isSubscribed" class="page-content__subscribed-m">Inscrição realizada com sucesso!</p>
       </div>
       
       <img v-if="showButton" class="img-ysp-m" src="~/static/img/ysp_logo.png" >
-      <div v-else style='cursor: pointer;' @click="handleSubmit()">
+      <div v-else style='cursor: pointer;' @click="handleSubmit('mobile')">
         <img class="img-ysp-m" src="~/static/img/ysp_logo.png" >
         <p class="page-content__date-m mt-0">Enviar</p>
       </div>
@@ -50,7 +61,7 @@
       
 
       <p class="page-content__subtitle-w">Um dos maiores e mais prestigiados</p>
-      <p class="page-content__subtitle-w top--un12">eventos do YSP do ano de 2021.</p>
+      <p class="page-content__subtitle-w top--un14">eventos do YSP do ano de 2021.</p>
 
       <p class="page-content__moto-w">Qual o seu legado?</p>
 
@@ -61,11 +72,22 @@
         <form v-if="!showButton && !isSubscribed" class="form-w d-flex flex-column">
           <div class="d-flex align-center justify-space-between">
             <label class="label-w" for="name">Nome</label>
-            <input id="name" v-model="name" class="input-w" type="text" name="name" placeholder="Digite seu nome completo">
+            <input id="name" v-model="form.name" style="width: 100%;" class="input-w" type="text" name="name" placeholder="Digite seu nome completo">
           </div>
           <div class="d-flex align-center justify-space-between">
             <label class="label-w" for="email">Email</label>
-            <input id="email" v-model="email" class="input-w" type="text" name="email" placeholder="Digite seu melhor email">
+            <input id="email" v-model="form.email" style="width: 100%;" class="input-w" type="text" name="email" placeholder="Digite seu melhor email">
+          </div>
+          <div class="d-flex align-center justify-space-between">
+            <select id="state" v-model="form.state" class="select-state select-state-w" name="state" form="stateform">
+              <option value="" disabled="disabled" selected="selected">Estado</option>
+              <option v-for="(state, i) in allStates" :key="i" :value="state.value">{{state.short}}</option>
+            </select>
+
+            <select id="city" v-model="form.city" :disabled="allCities.length == 0" style="width: 100%;" class="select-state select-state-w" name="city" form="stateform">
+              <option value="" disabled="disabled" selected="selected">Cidade</option>
+              <option v-for="(city, i) in allCities" :key="i" :value="city.value">{{city.value}}</option>
+            </select>
           </div>
         </form>
         <p v-if="isSubscribed" class="page-content__subscribed-w">Inscrição realizada com sucesso!</p>
@@ -74,7 +96,7 @@
       <img v-if="showButton" class="img-ysp-w" src="~/static/img/ysp_logo.png">
       <v-tooltip v-else bottom >
         <template #activator="{ on, attrs }">
-          <img  v-bind="attrs" class="img-ysp-w" style='cursor: pointer;' src="~/static/img/ysp_logo.png" v-on="on" @click="handleSubmit()" >
+          <img  v-bind="attrs" class="img-ysp-w" style='cursor: pointer;' src="~/static/img/ysp_logo.png" v-on="on" @click="handleSubmit('web')" >
         </template>
         <span>ENVIAR</span>
       </v-tooltip> 
@@ -88,12 +110,25 @@
 <script>
 
 export default({
+  name: 'YspLeadsIndex',
+  async asyncData({ $axios }) {
+    const allStatesOfBrazil = await $axios.$get(
+      `${process.env.brasilApi}ibge/uf/v1`
+    )
+    return { allStatesOfBrazil }
+  },
   data () {
     return {
       showButton: true,
       isSubscribed: false,
-      name: '',
-      email: ''
+      form: {
+        name: '',
+        email: '',
+        state: '',
+        city: '',
+      },
+      allStates: [],
+      allCities: [],
     }
   },
   computed: {
@@ -110,32 +145,90 @@ export default({
       return this.$vuetify.breakpoint.xsOnly
     }
   },
+  watch: {
+    'form.state'(paylod) {
+      if (paylod) {
+        const chosenState = this.allStates.find(
+          (state) => state.value === paylod
+        )
+        this.form.city = ""
+        this.getAndSetCitiesByStateCodeAsync(chosenState.id)
+      }
+    },
+  },
+  mounted() {
+    this.allStates = this.formatDataFromIbge(this.allStatesOfBrazil)
+    this.sendAnalyticsData()
+  },
   methods: {
+    formatDataFromIbge(states) {
+      return states.reduce((acc, state) => {
+        return [
+          ...acc,
+          {
+            value: state.nome,
+            short: state.sigla,
+            id: state.id,
+          },
+        ]
+      }, [])
+    },
+    async getAndSetCitiesByStateCodeAsync(stateId) {
+      const { data } = await this.$axios.get(
+        `${process.env.ibgeApi}localidades/estados/${stateId}/municipios`
+      )
+      this.allCities = this.formatDataFromIbge(data)
+    },
     validate() {
-      if(!this.name) {
+      if(!this.form.name) {
         this.$toast.open({message: "Por favor preencha seu nome completo", type: "warning"})
         return false
       }
-      if(!this.email) {
+      if(!this.form.email) {
         this.$toast.open({message: "Por favor preencha seu email", type: "warning"})
         return false
       }
       const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (!this.email.match(regexEmail)) {
+      if (!this.form.email.match(regexEmail)) {
         this.$toast.open({message: "Por favor insira um email válido", type: "warning"})
+        return false
+      }
+      if(!this.form.state) {
+        this.$toast.open({message: "Por favor selecione seu estado", type: "warning"})
+        return false
+      }
+      if(!this.form.city) {
+        this.$toast.open({message: "Por favor selecione sua cidade", type: "warning"})
         return false
       }
       return true
     },
-    handleSubmit() {
+    getDataToSubmit() {
+      return {
+        name: this.form.name, 
+        email: this.form.email.toLowerCase(), 
+        state: this.form.state, 
+        city: this.form.city, 
+      }
+    },
+    handleSubmit(deviceType) {
       if(!this.isSubscribed && this.validate()) {
         try {
           this.$axios.setHeader('apikey', process.env.SUPABASE_API_KEY)
-          this.$axios.post('leads', { name: this.name, email: this.email.toLowerCase() })
+          this.$axios.post('leads', {...this.getDataToSubmit(), device: deviceType})
           this.isSubscribed = true
         } catch (err) {
           this.$toast.open({message: "Falha ao enviar dados, por favor tente novamente.", type: "error"})
         }
+      }
+    },
+    sendAnalyticsData(typeData = 'page_read') {
+      try {
+        const deviceType = this.smAndDown ? 'mobile' : 'web'
+        this.$axios.setHeader('apikey', process.env.SUPABASE_API_KEY)
+        this.$axios.post('analytics', {type: typeData, device: deviceType})
+      } catch (err) {
+        console.error(err)
       }
     }
   }
@@ -166,11 +259,11 @@ export default({
 
     &__subtitle {
       &-w {
-        font-size: 36px;
+        font-size: 34px;
         font-weight: 400;
         color: #f2de79;
         text-align: center;
-        margin: 56px 0 0 0;
+        margin: 48px 0 0 0;
       }
       &-m {
         font-size: 18px;
@@ -196,7 +289,7 @@ export default({
         color: #f2de79;
         text-align: center;
         text-transform: uppercase;
-        margin: 28px 0 0 0;
+        margin: 21px 0 0 0;
       }
       &-m {
         font-size: 24px;
@@ -288,6 +381,9 @@ export default({
       &--un4 {
         margin-top: -4px;
       }
+      &--un14 {
+        margin-top: -14px;
+      }
       &--un12 {
         margin-top: -12px;
       }
@@ -348,6 +444,7 @@ export default({
     .form {
       &-w {
         margin: 10px 0;
+        min-width: 34vw;
       }
       &-m {
         margin: 18px 0;
@@ -357,6 +454,63 @@ export default({
     input:focus {
       outline: none;
       border: 2px solid #fada39;
+    }
+
+    .select-state {
+        -webkit-appearance: none;
+        color: #f2de79;
+        margin: 0 4px;
+        border: 2px solid #f2de79;
+        border-radius: 24px;
+        text-align: center;
+        cursor: pointer;
+        overflow:hidden;
+        white-space:nowrap; 
+        text-overflow:ellipsis;
+
+        option {
+          color: #223254;
+          text-overflow:ellipsis;
+          overflow:hidden;
+        }
+
+        option[value=""][disabled] {
+          display: none
+        }
+          
+        &:focus {
+          outline: none;
+          border: 2px solid #fada39;
+        }
+
+        &:hover {
+          outline: none;
+          border: 2px solid #fada39;
+        }
+
+        &[disabled] {
+          outline: none;
+          border: 2px solid #fada3998;
+          cursor: not-allowed;
+        }
+    }
+
+    .select-state-w {
+      padding: 8px 20px;
+      font-size: 20px;
+
+      option {
+        font-size: 14px;
+      }
+    }
+
+    .select-state-m {
+      padding: 10px 6px;
+      font-size: 14px;
+
+      option {
+        font-size: 14px;
+      }
     }
   }
   .page-background {
@@ -377,7 +531,5 @@ export default({
       min-height: 50%;
     }
   }
-
-  
 }
 </style>

@@ -46,6 +46,8 @@ export default {
   ],
 
   env: {
+    brasilApi: 'https://brasilapi.com.br/api/',
+    ibgeApi: 'https://servicodados.ibge.gov.br/api/v1/',
     SUPABASE_API_KEY: process.env.SUPABASE_KEY,
   },
 
@@ -62,8 +64,8 @@ export default {
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
+  // customVariables: ['~/assets/variables.scss'],
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
     theme: {
       dark: false,
       themes: {
