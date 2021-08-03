@@ -21,7 +21,7 @@
       <p class="page-content__date-m">Descubra no dia 14 de agosto</p>
 
       <div>
-        <button v-if="showButton" class="button__subscribe-m" @click="showButton = false" >Inscreva-se</button>
+        <button v-if="showButton" class="button__subscribe-m" @click="subscribe()" >Inscreva-se</button>
         <form v-if="!showButton && !isSubscribed" class="form-m d-flex flex-column">
           <div class="d-flex align-center justify-space-between">
             <label class="label-m" for="name">Nome</label>
@@ -68,7 +68,7 @@
       <p class="page-content__date-w">Descubra no dia 14 de agosto</p>
 
       <div>
-        <button v-if="showButton" class="button__subscribe-w" @click="showButton = false" >Inscreva-se</button>
+        <button v-if="showButton" class="button__subscribe-w" @click="subscribe()" >Inscreva-se</button>
         <form v-if="!showButton && !isSubscribed" class="form-w d-flex flex-column">
           <div class="d-flex align-center justify-space-between">
             <label class="label-w" for="name">Nome</label>
@@ -158,9 +158,13 @@ export default({
   },
   mounted() {
     this.allStates = this.formatDataFromIbge(this.allStatesOfBrazil)
-    this.sendAnalyticsData()
+    // this.sendAnalyticsData()
   },
   methods: {
+    subscribe() {
+      this.sendAnalyticsData('button_subscribe')
+      this.showButton = false
+    },
     formatDataFromIbge(states) {
       return states.reduce((acc, state) => {
         return [

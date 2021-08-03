@@ -3,7 +3,7 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - Paz',
+    titleTemplate: '%s - Embaixadores da Paz',
     title: 'YSP',
     meta: [
       { charset: 'utf-8' },
@@ -35,6 +35,7 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    ['@nuxtjs/moment', { /* module options */ }]
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
