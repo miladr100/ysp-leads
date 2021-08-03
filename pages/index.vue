@@ -158,7 +158,7 @@ export default({
   },
   mounted() {
     this.allStates = this.formatDataFromIbge(this.allStatesOfBrazil)
-    // this.sendAnalyticsData()
+    this.sendAnalyticsData()
   },
   methods: {
     subscribe() {
