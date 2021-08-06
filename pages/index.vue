@@ -7,7 +7,6 @@
       <p class="page-content__title-m opacity--4 top--un12" >VEM AÍ</p>
       <p class="page-content__title-m opacity--3" >VEM AÍ</p>
       <p class="page-content__title-m" >VEM AÍ</p>
-      
 
       <p class="page-content__subtitle-m">Um dos maiores e mais prestigiados</p>
       <p class="page-content__subtitle-m top--un4">eventos do YSP do ano de 2021.</p>
@@ -21,7 +20,7 @@
       <p class="page-content__date-m">Descubra no dia 14 de agosto</p>
 
       <div>
-        <button v-if="showButton" class="button__subscribe-m" @click="subscribe()" >Inscreva-se</button>
+        <button v-if="showButton" class="button button__subscribe-m" @click="subscribe()" >Inscreva-se</button>
         <form v-if="!showButton && !isSubscribed" class="form-m d-flex flex-column">
           <div class="d-flex align-center justify-space-between">
             <label class="label-m" for="name">Nome</label>
@@ -31,7 +30,7 @@
             <label class="label-m" for="email">Email</label>
             <input id="email" v-model="form.email" style="width: 100%;" class="input-m" type="text" name="email" placeholder="Digite seu melhor email">
           </div>
-          <div class="d-flex align-center justify-space-between">
+          <div class="d-flex align-center justify-space-between mt-1">
             <select id="state" v-model="form.state" class="select-state select-state-m" name="state" form="stateform">
               <option value="" disabled="disabled" selected="selected">Estado</option>
               <option v-for="(state, i) in allStates" :key="i" :value="state.value">{{state.short}}</option>
@@ -44,13 +43,19 @@
           </div>
         </form>
         <p v-if="isSubscribed" class="page-content__subscribed-m">Inscrição realizada com sucesso!</p>
+        <div v-if="isSubscribed" class="d-flex flex-row justify-center align-center top--un30 mb-4"> 
+          <span>
+            <p class="page-content__date-m">Agora é sua vez de contribuir com a paz!</p>
+            <p class="page-content__date-m top--un4">Compartilhe o evento com seus amigos ;)</p>
+          </span>
+          <div @click="shareViaWhatsApp()">
+            <span class="iconify" data-icon="mdi:whatsapp" style="color: #fada39;" data-width="30" data-height="30"></span>
+          </div>
+        </div>
       </div>
       
-      <img v-if="showButton" class="img-ysp-m" src="~/static/img/ysp_logo.png" >
-      <div v-else style='cursor: pointer;' @click="handleSubmit('mobile')">
-        <img class="img-ysp-m" src="~/static/img/ysp_logo.png" >
-        <p class="page-content__date-m mt-0">Enviar</p>
-      </div>
+      <button v-if="!showButton && !isSubscribed" class="button button__send-m" @click="handleSubmit('mobile')">Enviar</button>
+      <img v-else class="img-ysp-m" src="~/static/img/ysp_logo.png" >
     </div>
 
     <!--##### WEB -->
@@ -58,7 +63,6 @@
       
       <p class="page-content__title-w opacity--2 top--un110" >VEM AÍ</p>
       <p class="page-content__title-w" >VEM AÍ</p>
-      
 
       <p class="page-content__subtitle-w">Um dos maiores e mais prestigiados</p>
       <p class="page-content__subtitle-w top--un14">eventos do YSP do ano de 2021.</p>
@@ -68,7 +72,7 @@
       <p class="page-content__date-w">Descubra no dia 14 de agosto</p>
 
       <div>
-        <button v-if="showButton" class="button__subscribe-w" @click="subscribe()" >Inscreva-se</button>
+        <button v-if="showButton" class="button button__subscribe-w" @click="subscribe()" >Inscreva-se</button>
         <form v-if="!showButton && !isSubscribed" class="form-w d-flex flex-column">
           <div class="d-flex align-center justify-space-between">
             <label class="label-w" for="name">Nome</label>
@@ -78,7 +82,7 @@
             <label class="label-w" for="email">Email</label>
             <input id="email" v-model="form.email" style="width: 100%;" class="input-w" type="text" name="email" placeholder="Digite seu melhor email">
           </div>
-          <div class="d-flex align-center justify-space-between">
+          <div class="d-flex align-center justify-space-between mt-1">
             <select id="state" v-model="form.state" class="select-state select-state-w" name="state" form="stateform">
               <option value="" disabled="disabled" selected="selected">Estado</option>
               <option v-for="(state, i) in allStates" :key="i" :value="state.value">{{state.short}}</option>
@@ -90,16 +94,21 @@
             </select>
           </div>
         </form>
+        
         <p v-if="isSubscribed" class="page-content__subscribed-w">Inscrição realizada com sucesso!</p>
+        <div v-if="isSubscribed" class="d-flex flex-row justify-center align-center top--un30 mb-4"> 
+          <span>
+            <p class="page-content__date-w">Agora é sua vez de contribuir com a paz!</p>
+            <p class="page-content__date-w top--un4">Compartilhe o evento com seus amigos ;)</p>
+          </span>
+          <div @click="shareViaWhatsApp()">
+            <span class="iconify" data-icon="mdi:whatsapp" style="color: #fada39;" data-width="46" data-height="46"></span>
+          </div>
+        </div>
       </div>
       
-      <img v-if="showButton" class="img-ysp-w" src="~/static/img/ysp_logo.png">
-      <v-tooltip v-else bottom >
-        <template #activator="{ on, attrs }">
-          <img  v-bind="attrs" class="img-ysp-w" style='cursor: pointer;' src="~/static/img/ysp_logo.png" v-on="on" @click="handleSubmit('web')" >
-        </template>
-        <span>ENVIAR</span>
-      </v-tooltip> 
+      <button v-if="!showButton && !isSubscribed" class="button button__send-w" @click="handleSubmit('web')">Enviar</button>
+      <img v-else class="img-ysp-w" src="~/static/img/ysp_logo.png">
     </div>
     <div class="page-background">
       <img class="page-background__background" src="~/static/img/fullscreen-background.png" >
@@ -212,7 +221,8 @@ export default({
         name: this.form.name, 
         email: this.form.email.toLowerCase(), 
         state: this.form.state, 
-        city: this.form.city, 
+        city: this.form.city,
+        created_at: new Date(),
       }
     },
     handleSubmit(deviceType) {
@@ -234,6 +244,19 @@ export default({
       } catch (err) {
         console.error(err)
       }
+    },
+    shareViaWhatsApp() {
+      let header = "Oi oi, tudo bem? :)"
+      const name = this.form.name?.split(' ')[0]
+      if(name) header = `Oi oi, aqui é a ${this.form.name.split(' ')[0]} :)`
+      const message = window.encodeURIComponent(`${header}
+      👋 Vim te convidar para a 2ª nomeação de Jovens Embaixadores da Paz, com discussões sobre "Qual é o seu legado?"
+      Conheça experiências e lições de vida de jovens de destaque, e saiba como eles superam os desafios da vida para construir um legado!!
+      📆 Sábado, 24 de agosto, às 16 hrs 
+      
+      Inscreva-se agora pelo link: https://embaixadorespaz.vercel.app/`)
+      window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank').focus()
+      this.sendAnalyticsData('share_whatsapp')
     }
   }
 })
@@ -328,40 +351,55 @@ export default({
         font-weight: 400;
         color: #f2de79;
         text-align: center;
-        margin: 46px 0;
+        margin: 36px 0;
       }
       &-m {
         font-size: 24px;
         font-weight: 500;
         color: #f2de79;
         text-align: center;
-        margin: 56px 0;
+        margin: 42px 0;
       }
     }
 
     .button {
+      transition-duration: 0.4s;
+      color: #f2de79;
+      text-transform: uppercase;
+      border: 2px solid #f2de79;
+      border-radius: 60px;
+      cursor: pointer;
+      &:hover {
+        outline: none;
+        border: 2px solid #fada39;
+        color: #fada39;
+      }
       &__subscribe {
         &-w {
-          transition-duration: 0.4s;
-          color: #f2de79;
           font-size: 46px;
           font-weight: 500;
-          text-transform: uppercase;
           padding: 4px 48px;
-          border: 2px solid #f2de79;
-          border-radius: 60px;
           margin: 24px 0;
         }
         &-m {
-          transition-duration: 0.4s;
-          color: #f2de79;
           font-size: 28px;
           font-weight: 500;
-          text-transform: uppercase;
           padding: 6px 32px;
-          border: 2px solid #f2de79;
-          border-radius: 60px;
           margin: 42px 0;
+        }
+      }
+      &__send {
+        &-w {
+          font-size: 18px;
+          font-weight: 400;
+          padding: 4px 42px;
+          margin: 14px 0;
+        }
+        &-m {
+          font-size: 18px;
+          font-weight: 400;
+          padding: 6px 32px;
+          margin: 12px 0;
         }
       }
     }
@@ -390,6 +428,9 @@ export default({
       }
       &--un12 {
         margin-top: -12px;
+      }
+      &--un30 {
+        margin-top: -30px;
       }
       &--un70 {
         margin-top: -70px;
@@ -471,6 +512,7 @@ export default({
         overflow:hidden;
         white-space:nowrap; 
         text-overflow:ellipsis;
+        transition-duration: 0.4s;
 
         option {
           color: #223254;
@@ -490,6 +532,7 @@ export default({
         &:hover {
           outline: none;
           border: 2px solid #fada39;
+          color: #fada39;
         }
 
         &[disabled] {
@@ -514,6 +557,16 @@ export default({
 
       option {
         font-size: 14px;
+      }
+    }
+
+    .iconify {
+    transition-duration: 0.4s;
+    cursor: pointer;
+    margin-left: 12px;
+
+      &:hover { 
+        margin-bottom: 6px;
       }
     }
   }
