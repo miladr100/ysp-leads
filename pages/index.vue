@@ -117,6 +117,7 @@
 </template>
 
 <script>
+import statesAndCities from '~/static/json/estados-cidades.json'
 
 export default({
   name: 'YspLeadsIndex',
@@ -161,13 +162,14 @@ export default({
           (state) => state.value === paylod
         )
         this.form.city = ""
-        this.getAndSetCitiesByStateCodeAsync(chosenState.id)
+        this.getAndSetCitiesByStateCodeAsync(chosenState)
       }
     },
   },
   mounted() {
     this.allStates = this.formatDataFromIbge(this.allStatesOfBrazil)
     this.sendAnalyticsData()
+    
   },
   methods: {
     subscribe() {
@@ -186,11 +188,26 @@ export default({
         ]
       }, [])
     },
-    async getAndSetCitiesByStateCodeAsync(stateId) {
-      const { data } = await this.$axios.get(
-        `${process.env.ibgeApi}localidades/estados/${stateId}/municipios`
-      )
-      this.allCities = this.formatDataFromIbge(data)
+    getAndSetCitiesByStateCodeAsync(state) {
+      try {
+        // const { data } = await this.$axios.get(
+        // `${process.env.ibgeApi}localidades/estados/${state.id}/municipios`
+        // )
+        // this.allCities = this.formatDataFromIbge(data)
+        this.getStaticCities(state)
+      } catch (err) {
+        console.error(err)
+      }
+    },
+    getStaticCities(stateSelected) {
+      const cities = statesAndCities.estados.filter(state => state.sigla === stateSelected.short)[0]
+      const formattedCities = cities.cidades.map((city, index) => {
+        return {
+          id: index,
+          value: city
+        }
+      })
+      this.allCities = formattedCities
     },
     validate() {
       if(!this.form.name) {
