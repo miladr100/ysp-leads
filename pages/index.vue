@@ -223,14 +223,14 @@ export default({
         this.$toast.open({message: "Por favor insira um email válido", type: "warning"})
         return false
       }
-      if(!this.form.state) {
-        this.$toast.open({message: "Por favor selecione seu estado", type: "warning"})
-        return false
-      }
-      if(!this.form.city) {
-        this.$toast.open({message: "Por favor selecione sua cidade", type: "warning"})
-        return false
-      }
+      // if(!this.form.state) {
+      //   this.$toast.open({message: "Por favor selecione seu estado", type: "warning"})
+      //   return false
+      // }
+      // if(!this.form.city) {
+      //   this.$toast.open({message: "Por favor selecione sua cidade", type: "warning"})
+      //   return false
+      // }
       return true
     },
     getDataToSubmit() {
