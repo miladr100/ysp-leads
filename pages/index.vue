@@ -1,8 +1,13 @@
 <template>
-  
   <div class="page">
     <!--##### MOBILE -->
     <div v-if="smAndDown" class="page-content d-flex flex-column align-center">
+      <div v-if="followBoxMobile" class="social-m d-flex flex-column align-center justify-center mt-12 px-5 py-4">
+        <p class="social-m-btn" @click="followBoxMobile = false">X</p>
+        <p class="page-content__date-m mb-2" style="color: white;">Siga-nos</p>
+        <div @click="followInstagram()"><span class="iconify" data-icon="mdi:instagram" style="color: #c13584;" data-width="34" data-height="34" @click="followInstagram()"></span></div>
+        <div @click="followFacebook()"><span class="iconify" data-icon="mdi:facebook" style="color: #3b5998;" data-width="34" data-height="34" @click="followFacebok()"></span></div>
+      </div>
       
       <p class="page-content__title-m opacity--4 top--un12" >VEM AÍ</p>
       <p class="page-content__title-m opacity--3" >VEM AÍ</p>
@@ -60,6 +65,11 @@
 
     <!--##### WEB -->
     <div v-else class="page-content d-flex flex-column align-center">
+      <div class="social-w d-flex flex-column align-center mt-12 ml-12">
+        <p class="page-content__date-w">Siga-nos</p>
+        <div @click="followInstagram()"><span class="iconify" data-icon="mdi:instagram" style="color: #c13584;" data-width="42" data-height="42" ></span></div>
+        <div @click="followFacebook()"><span class="iconify" data-icon="mdi:facebook" style="color: #3b5998;" data-width="42" data-height="42" ></span></div>
+      </div>
       
       <p class="page-content__title-w opacity--2 top--un110" >VEM AÍ</p>
       <p class="page-content__title-w" >VEM AÍ</p>
@@ -131,6 +141,7 @@ export default({
     return {
       showButton: true,
       isSubscribed: false,
+      followBoxMobile: true,
       form: {
         name: '',
         email: '',
@@ -168,8 +179,7 @@ export default({
   },
   mounted() {
     this.allStates = this.formatDataFromIbge(this.allStatesOfBrazil)
-    this.sendAnalyticsData()
-    
+    this.sendAnalyticsData() 
   },
   methods: {
     subscribe() {
@@ -274,6 +284,13 @@ export default({
       Inscreva-se agora pelo link: https://embaixadorespaz.vercel.app/`)
       window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank').focus()
       this.sendAnalyticsData('share_whatsapp')
+    },
+    followInstagram(){
+      console.log("OI Insta")
+      window.open("https://www.instagram.com/ysplatinamerica/", '_blank').focus()
+    },
+    followFacebook(){
+      window.open("https://www.facebook.com/ysplatinamerica", '_blank').focus()
     }
   }
 })
@@ -282,6 +299,33 @@ export default({
 
 <style lang="scss" scoped>
 .page {
+  .social {
+    &-w {
+      position: absolute;
+      z-index: 3;
+      left: 0;
+    }
+    &-m {
+      position: fixed;
+      z-index: 3;
+      left: 0;
+      background-color: #f2de7981;
+      border-radius: 8px;
+
+      &-btn {
+        top: 0;
+        right: 0;
+        margin: -6px -8px 0 0;
+        position: absolute;
+        padding: 2px 8px;
+        font-size: 14px;
+        color: white;
+        border-radius: 50%;
+        background-color: red;
+      }
+    }
+  }
+
   .page-content {
     position: relative;
     z-index: 2;
