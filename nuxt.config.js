@@ -14,6 +14,7 @@ export default {
     link: [
       { rel: 'shortcut icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' },
     ],
     script: [
       { src: "https://code.iconify.design/1/1.0.7/iconify.min.js" }

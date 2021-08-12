@@ -9,20 +9,25 @@
         <div @click="followFacebook()"><span class="iconify" data-icon="mdi:facebook" style="color: #3b5998;" data-width="34" data-height="34" @click="followFacebok()"></span></div>
       </div>
       
-      <p class="page-content__title-m opacity--4 top--un12" >VEM AÍ</p>
+      <!-- <p class="page-content__title-m opacity--4 top--un12" >VEM AÍ</p>
       <p class="page-content__title-m opacity--3" >VEM AÍ</p>
-      <p class="page-content__title-m" >VEM AÍ</p>
+      <p class="page-content__title-m" >VEM AÍ</p> -->
 
-      <p class="page-content__subtitle-m">Um dos maiores e mais prestigiados</p>
-      <p class="page-content__subtitle-m top--un4">eventos do YSP do ano de 2021.</p>
+      <p class="page-content__title-m page-content__title-m-top" >2º Nomeação de</p>
+      <p class="page-content__title-m" >Jovens </p> 
+      <p class="page-content__title-m" >Embaixadores </p> 
+      <p class="page-content__title-m" >pela Paz </p> 
 
-      <p class="page-content__text">Um evento que contará com vários jovens de</p>
+      <!-- <p class="page-content__subtitle-m">Um dos maiores e mais prestigiados</p>
+      <p class="page-content__subtitle-m top--un4">eventos do YSP do ano de 2021.</p> -->
+
+      <p class="page-content__text mt-16">Um evento que contará com vários jovens de</p>
       <p class="page-content__text top--un4">destaque, das mais diversas áreas, discutindo </p>
       <p class="page-content__text top--un4">sobre o que mais importa para você!</p>
 
       <p class="page-content__moto-m">Qual o seu legado?</p>
 
-      <p class="page-content__date-m">Descubra no dia 14 de agosto</p>
+      <p class="page-content__date-m">Dia 14 de agosto</p>
 
       <div>
         <button v-if="showButton" class="button button__subscribe-m" @click="subscribe()" >Inscreva-se</button>
@@ -71,15 +76,20 @@
         <div @click="followFacebook()"><span class="iconify" data-icon="mdi:facebook" style="color: #3b5998;" data-width="42" data-height="42" ></span></div>
       </div>
       
-      <p class="page-content__title-w opacity--2 top--un110" >VEM AÍ</p>
-      <p class="page-content__title-w" >VEM AÍ</p>
+      <!-- <p class="page-content__title-w opacity--2 top--un110" >VEM AÍ</p>
+      <p class="page-content__title-w" >VEM AÍ</p> -->
 
-      <p class="page-content__subtitle-w">Um dos maiores e mais prestigiados</p>
-      <p class="page-content__subtitle-w top--un14">eventos do YSP do ano de 2021.</p>
+      <p class="page-content__title-w page-content__title-w-top" >2º Nomeação de</p>
+      <p class="page-content__title-w" >Jovens </p> 
+      <p class="page-content__title-w" >Embaixadores </p> 
+      <p class="page-content__title-w" >pela Paz </p> 
+
+      <!-- <p class="page-content__subtitle-w">Um dos maiores e mais prestigiados</p>
+      <p class="page-content__subtitle-w top--un14">eventos do YSP do ano de 2021.</p> -->
 
       <p class="page-content__moto-w">Qual o seu legado?</p>
 
-      <p class="page-content__date-w">Descubra no dia 14 de agosto</p>
+      <p class="page-content__date-w">Dia 14 de agosto</p>
 
       <div>
         <button v-if="showButton" class="button button__subscribe-w" @click="subscribe()" >Inscreva-se</button>
@@ -332,16 +342,24 @@ export default({
 
     &__title {
       &-w {
-        font-size: 130px;
+        font-size: 78px;
         font-weight: 800;
         color: #f2de79;
-        margin: -12px 0 -56px 0;
+        margin: 0px 0 -48px 0;
+        &-top { 
+          font-size: 58px;
+          margin: 24px 0 0 0;
+        }
       }
       &-m {
-        font-size: 86px;
-        font-weight: 800;
+        font-size: 48px;
+        font-weight: 700;
         color: #f2de79;
-        margin: -8px 0 -38px 0;
+        margin: 8px 0 -38px 0;
+        &-top { 
+          font-size: 38px;
+          margin: 24px 0 0 0;
+        }
       }
     }
 
@@ -363,7 +381,7 @@ export default({
     }
 
     &__text {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 400;
       color: #f2de79;
       text-align: center;
@@ -377,7 +395,7 @@ export default({
         color: #f2de79;
         text-align: center;
         text-transform: uppercase;
-        margin: 21px 0 0 0;
+        margin: 42px 0 0 0;
       }
       &-m {
         font-size: 24px;
@@ -385,7 +403,7 @@ export default({
         color: #f2de79;
         text-align: center;
         text-transform: uppercase;
-        margin: 32px 0 0 0;
+        margin: 24px 0 0 0;
       }
     }
 
@@ -395,14 +413,14 @@ export default({
         font-weight: 500;
         color: #f2de79;
         text-align: center;
-        margin: 2px 0 0 0;
+        margin: -4px 0 0 0;
       }
       &-m {
         font-size: 14px;
         font-weight: 500;
         color: #f2de79;
         text-align: center;
-        margin: 6px 0 0 0;
+        margin: 4px 0 0 0;
       }
     }
 

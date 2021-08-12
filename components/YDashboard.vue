@@ -40,7 +40,11 @@
 </template>
 
 <script>
+
   export default {
+    name: "YDashboard",
+    components: {
+    },
     data () {
       return {
         allLeads: [],
