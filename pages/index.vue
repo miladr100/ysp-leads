@@ -2,136 +2,347 @@
   <div class="page">
     <!--##### MOBILE -->
     <div v-if="smAndDown" class="page-content d-flex flex-column align-center">
-      <div v-if="followBoxMobile" class="social-m d-flex flex-column align-center justify-center mt-12 px-5 py-4">
+      <div
+        v-if="followBoxMobile"
+        class="
+          social-m
+          d-flex
+          flex-column
+          align-center
+          justify-center
+          mt-12
+          px-5
+          py-4
+        "
+      >
         <p class="social-m-btn" @click="followBoxMobile = false">X</p>
-        <p class="page-content__date-m mb-2" style="color: white;">Siga-nos</p>
-        <div @click="followInstagram()"><span class="iconify" data-icon="mdi:instagram" style="color: #c13584;" data-width="34" data-height="34" @click="followInstagram()"></span></div>
-        <div @click="followFacebook()"><span class="iconify" data-icon="mdi:facebook" style="color: #3b5998;" data-width="34" data-height="34" @click="followFacebok()"></span></div>
+        <p class="page-content__date-m mb-2" style="color: white">Siga-nos</p>
+        <div @click="followInstagram()">
+          <span
+            class="iconify"
+            data-icon="mdi:instagram"
+            style="color: #c13584"
+            data-width="34"
+            data-height="34"
+            @click="followInstagram()"
+          ></span>
+        </div>
+        <div @click="followFacebook()">
+          <span
+            class="iconify"
+            data-icon="mdi:facebook"
+            style="color: #3b5998"
+            data-width="34"
+            data-height="34"
+            @click="followFacebok()"
+          ></span>
+        </div>
       </div>
-      
+
       <!-- <p class="page-content__title-m opacity--4 top--un12" >VEM AÍ</p>
       <p class="page-content__title-m opacity--3" >VEM AÍ</p>
       <p class="page-content__title-m" >VEM AÍ</p> -->
 
-      <p class="page-content__title-m page-content__title-m-top" >2º Nomeação de</p>
-      <p class="page-content__title-m" >Jovens </p> 
-      <p class="page-content__title-m" >Embaixadores </p> 
-      <p class="page-content__title-m" >pela Paz </p> 
+      <p class="page-content__title-m page-content__title-m-top">
+        2º Nomeação de
+      </p>
+      <p class="page-content__title-m">Jovens</p>
+      <p class="page-content__title-m">Embaixadores</p>
+      <p class="page-content__title-m">pela Paz</p>
 
       <!-- <p class="page-content__subtitle-m">Um dos maiores e mais prestigiados</p>
       <p class="page-content__subtitle-m top--un4">eventos do YSP do ano de 2021.</p> -->
 
-      <p class="page-content__text mt-16">Um evento que contará com vários jovens de</p>
-      <p class="page-content__text top--un4">destaque, das mais diversas áreas, discutindo </p>
-      <p class="page-content__text top--un4">sobre o que mais importa para você!</p>
+      <p class="page-content__text mt-16">
+        Um evento que contará com vários jovens de
+      </p>
+      <p class="page-content__text top--un4">
+        destaque, das mais diversas áreas, discutindo
+      </p>
+      <p class="page-content__text top--un4">
+        sobre o que mais importa para você!
+      </p>
 
       <p class="page-content__moto-m">Qual o seu legado?</p>
 
-      <p class="page-content__date-m">Dia 14 de agosto</p>
+      <p class="page-content__date-m">Dia 14 de agosto às 16 horas</p>
 
       <div>
-        <button v-if="showButton" class="button button__subscribe-m" @click="subscribe()" >Inscreva-se</button>
-        <form v-if="!showButton && !isSubscribed" class="form-m d-flex flex-column">
+        <button
+          v-if="showButton"
+          class="button button__subscribe-m"
+          @click="subscribe()"
+        >
+          Inscreva-se
+        </button>
+        <form
+          v-if="!showButton && !isSubscribed"
+          class="form-m d-flex flex-column"
+        >
           <div class="d-flex align-center justify-space-between">
             <label class="label-m" for="name">Nome</label>
-            <input id="name" v-model="form.name" style="width: 100%;" class="input-m" type="text" name="name" placeholder="Digite seu nome completo">
+            <input
+              id="name"
+              v-model="form.name"
+              style="width: 100%"
+              class="input-m"
+              type="text"
+              name="name"
+              placeholder="Digite seu nome completo"
+            />
           </div>
           <div class="d-flex align-center justify-space-between">
             <label class="label-m" for="email">Email</label>
-            <input id="email" v-model="form.email" style="width: 100%;" class="input-m" type="text" name="email" placeholder="Digite seu melhor email">
+            <input
+              id="email"
+              v-model="form.email"
+              style="width: 100%"
+              class="input-m"
+              type="text"
+              name="email"
+              placeholder="Digite seu melhor email"
+            />
           </div>
           <div class="d-flex align-center justify-space-between mt-1">
-            <select id="state" v-model="form.state" class="select-state select-state-m" name="state" form="stateform">
-              <option value="" disabled="disabled" selected="selected">Estado</option>
-              <option v-for="(state, i) in allStates" :key="i" :value="state.value">{{state.short}}</option>
+            <select
+              id="state"
+              v-model="form.state"
+              class="select-state select-state-m"
+              name="state"
+              form="stateform"
+            >
+              <option value="" disabled="disabled" selected="selected">
+                Estado
+              </option>
+              <option
+                v-for="(state, i) in allStates"
+                :key="i"
+                :value="state.value"
+              >
+                {{ state.short }}
+              </option>
             </select>
 
-            <select id="city" v-model="form.city" :disabled="allCities.length == 0" style="width: 100%;" class="select-state select-state-m" name="city" form="stateform">
-              <option value="" disabled="disabled" selected="selected">Cidade</option>
-              <option v-for="(city, i) in allCities" :key="i" :value="city.value">{{city.value}}</option>
+            <select
+              id="city"
+              v-model="form.city"
+              :disabled="allCities.length == 0"
+              style="width: 100%"
+              class="select-state select-state-m"
+              name="city"
+              form="stateform"
+            >
+              <option value="" disabled="disabled" selected="selected">
+                Cidade
+              </option>
+              <option
+                v-for="(city, i) in allCities"
+                :key="i"
+                :value="city.value"
+              >
+                {{ city.value }}
+              </option>
             </select>
           </div>
         </form>
-        <p v-if="isSubscribed" class="page-content__subscribed-m">Inscrição realizada com sucesso!</p>
-        <div v-if="isSubscribed" class="d-flex flex-row justify-center align-center top--un30 mb-4"> 
+        <p v-if="isSubscribed" class="page-content__subscribed-m">
+          Inscrição realizada com sucesso!
+        </p>
+        <div
+          v-if="isSubscribed"
+          class="d-flex flex-row justify-center align-center top--un30 mb-4"
+        >
           <span>
-            <p class="page-content__date-m">Agora é sua vez de contribuir com a paz!</p>
-            <p class="page-content__date-m top--un4">Compartilhe o evento com seus amigos ;)</p>
+            <p class="page-content__date-m">
+              Agora é sua vez de contribuir com a paz!
+            </p>
+            <p class="page-content__date-m top--un4">
+              Compartilhe o evento com seus amigos ;)
+            </p>
           </span>
           <div @click="shareViaWhatsApp()">
-            <span class="iconify" data-icon="mdi:whatsapp" style="color: #fada39;" data-width="30" data-height="30"></span>
+            <span
+              class="iconify"
+              data-icon="mdi:whatsapp"
+              style="color: #fada39"
+              data-width="30"
+              data-height="30"
+            ></span>
           </div>
         </div>
       </div>
-      
-      <button v-if="!showButton && !isSubscribed" class="button button__send-m" @click="handleSubmit('mobile')">Enviar</button>
-      <img v-else class="img-ysp-m" src="~/static/img/ysp_logo.png" >
+
+      <button
+        v-if="!showButton && !isSubscribed"
+        class="button button__send-m"
+        @click="handleSubmit('mobile')"
+      >
+        Enviar
+      </button>
+      <img v-else class="img-ysp-m" src="~/static/img/ysp_logo.png" />
     </div>
 
     <!--##### WEB -->
     <div v-else class="page-content d-flex flex-column align-center">
       <div class="social-w d-flex flex-column align-center mt-12 ml-12">
         <p class="page-content__date-w">Siga-nos</p>
-        <div @click="followInstagram()"><span class="iconify" data-icon="mdi:instagram" style="color: #c13584;" data-width="42" data-height="42" ></span></div>
-        <div @click="followFacebook()"><span class="iconify" data-icon="mdi:facebook" style="color: #3b5998;" data-width="42" data-height="42" ></span></div>
+        <div @click="followInstagram()">
+          <span
+            class="iconify"
+            data-icon="mdi:instagram"
+            style="color: #c13584"
+            data-width="42"
+            data-height="42"
+          ></span>
+        </div>
+        <div @click="followFacebook()">
+          <span
+            class="iconify"
+            data-icon="mdi:facebook"
+            style="color: #3b5998"
+            data-width="42"
+            data-height="42"
+          ></span>
+        </div>
       </div>
-      
+
       <!-- <p class="page-content__title-w opacity--2 top--un110" >VEM AÍ</p>
       <p class="page-content__title-w" >VEM AÍ</p> -->
 
-      <p class="page-content__title-w page-content__title-w-top" >2º Nomeação de</p>
-      <p class="page-content__title-w" >Jovens </p> 
-      <p class="page-content__title-w" >Embaixadores </p> 
-      <p class="page-content__title-w" >pela Paz </p> 
+      <p class="page-content__title-w page-content__title-w-top">
+        2º Nomeação de
+      </p>
+      <p class="page-content__title-w">Jovens</p>
+      <p class="page-content__title-w">Embaixadores</p>
+      <p class="page-content__title-w">pela Paz</p>
 
       <!-- <p class="page-content__subtitle-w">Um dos maiores e mais prestigiados</p>
       <p class="page-content__subtitle-w top--un14">eventos do YSP do ano de 2021.</p> -->
 
       <p class="page-content__moto-w">Qual o seu legado?</p>
 
-      <p class="page-content__date-w">Dia 14 de agosto</p>
+      <p class="page-content__date-w">Dia 14 de agosto às 16 horas</p>
 
       <div>
-        <button v-if="showButton" class="button button__subscribe-w" @click="subscribe()" >Inscreva-se</button>
-        <form v-if="!showButton && !isSubscribed" class="form-w d-flex flex-column">
+        <button
+          v-if="showButton"
+          class="button button__subscribe-w"
+          @click="subscribe()"
+        >
+          Inscreva-se
+        </button>
+        <form
+          v-if="!showButton && !isSubscribed"
+          class="form-w d-flex flex-column"
+        >
           <div class="d-flex align-center justify-space-between">
             <label class="label-w" for="name">Nome</label>
-            <input id="name" v-model="form.name" style="width: 100%;" class="input-w" type="text" name="name" placeholder="Digite seu nome completo">
+            <input
+              id="name"
+              v-model="form.name"
+              style="width: 100%"
+              class="input-w"
+              type="text"
+              name="name"
+              placeholder="Digite seu nome completo"
+            />
           </div>
           <div class="d-flex align-center justify-space-between">
             <label class="label-w" for="email">Email</label>
-            <input id="email" v-model="form.email" style="width: 100%;" class="input-w" type="text" name="email" placeholder="Digite seu melhor email">
+            <input
+              id="email"
+              v-model="form.email"
+              style="width: 100%"
+              class="input-w"
+              type="text"
+              name="email"
+              placeholder="Digite seu melhor email"
+            />
           </div>
           <div class="d-flex align-center justify-space-between mt-1">
-            <select id="state" v-model="form.state" class="select-state select-state-w" name="state" form="stateform">
-              <option value="" disabled="disabled" selected="selected">Estado</option>
-              <option v-for="(state, i) in allStates" :key="i" :value="state.value">{{state.short}}</option>
+            <select
+              id="state"
+              v-model="form.state"
+              class="select-state select-state-w"
+              name="state"
+              form="stateform"
+            >
+              <option value="" disabled="disabled" selected="selected">
+                Estado
+              </option>
+              <option
+                v-for="(state, i) in allStates"
+                :key="i"
+                :value="state.value"
+              >
+                {{ state.short }}
+              </option>
             </select>
 
-            <select id="city" v-model="form.city" :disabled="allCities.length == 0" style="width: 100%;" class="select-state select-state-w" name="city" form="stateform">
-              <option value="" disabled="disabled" selected="selected">Cidade</option>
-              <option v-for="(city, i) in allCities" :key="i" :value="city.value">{{city.value}}</option>
+            <select
+              id="city"
+              v-model="form.city"
+              :disabled="allCities.length == 0"
+              style="width: 100%"
+              class="select-state select-state-w"
+              name="city"
+              form="stateform"
+            >
+              <option value="" disabled="disabled" selected="selected">
+                Cidade
+              </option>
+              <option
+                v-for="(city, i) in allCities"
+                :key="i"
+                :value="city.value"
+              >
+                {{ city.value }}
+              </option>
             </select>
           </div>
         </form>
-        
-        <p v-if="isSubscribed" class="page-content__subscribed-w">Inscrição realizada com sucesso!</p>
-        <div v-if="isSubscribed" class="d-flex flex-row justify-center align-center top--un30 mb-4"> 
+
+        <p v-if="isSubscribed" class="page-content__subscribed-w">
+          Inscrição realizada com sucesso!
+        </p>
+        <div
+          v-if="isSubscribed"
+          class="d-flex flex-row justify-center align-center top--un30 mb-4"
+        >
           <span>
-            <p class="page-content__date-w">Agora é sua vez de contribuir com a paz!</p>
-            <p class="page-content__date-w top--un4">Compartilhe o evento com seus amigos ;)</p>
+            <p class="page-content__date-w">
+              Agora é sua vez de contribuir com a paz!
+            </p>
+            <p class="page-content__date-w top--un4">
+              Compartilhe o evento com seus amigos ;)
+            </p>
           </span>
           <div @click="shareViaWhatsApp()">
-            <span class="iconify" data-icon="mdi:whatsapp" style="color: #fada39;" data-width="46" data-height="46"></span>
+            <span
+              class="iconify"
+              data-icon="mdi:whatsapp"
+              style="color: #fada39"
+              data-width="46"
+              data-height="46"
+            ></span>
           </div>
         </div>
       </div>
-      
-      <button v-if="!showButton && !isSubscribed" class="button button__send-w" @click="handleSubmit('web')">Enviar</button>
-      <img v-else class="img-ysp-w" src="~/static/img/ysp_logo.png">
+
+      <button
+        v-if="!showButton && !isSubscribed"
+        class="button button__send-w"
+        @click="handleSubmit('web')"
+      >
+        Enviar
+      </button>
+      <img v-else class="img-ysp-w" src="~/static/img/ysp_logo.png" />
     </div>
     <div class="page-background">
-      <img class="page-background__background" src="~/static/img/fullscreen-background.png" >
+      <img
+        class="page-background__background"
+        src="~/static/img/fullscreen-background.png"
+      />
     </div>
   </div>
 </template>
@@ -139,7 +350,7 @@
 <script>
 import statesAndCities from '~/static/json/estados-cidades.json'
 
-export default({
+export default {
   name: 'YspLeadsIndex',
   async asyncData({ $axios }) {
     const allStatesOfBrazil = await $axios.$get(
@@ -147,7 +358,7 @@ export default({
     )
     return { allStatesOfBrazil }
   },
-  data () {
+  data() {
     return {
       showButton: true,
       isSubscribed: false,
@@ -174,7 +385,7 @@ export default({
     },
     xsOnly() {
       return this.$vuetify.breakpoint.xsOnly
-    }
+    },
   },
   watch: {
     'form.state'(paylod) {
@@ -182,14 +393,14 @@ export default({
         const chosenState = this.allStates.find(
           (state) => state.value === paylod
         )
-        this.form.city = ""
+        this.form.city = ''
         this.getAndSetCitiesByStateCodeAsync(chosenState)
       }
     },
   },
   mounted() {
     this.allStates = this.formatDataFromIbge(this.allStatesOfBrazil)
-    this.sendAnalyticsData() 
+    this.sendAnalyticsData()
   },
   methods: {
     subscribe() {
@@ -220,27 +431,39 @@ export default({
       }
     },
     getStaticCities(stateSelected) {
-      const cities = statesAndCities.estados.filter(state => state.sigla === stateSelected.short)[0]
+      const cities = statesAndCities.estados.filter(
+        (state) => state.sigla === stateSelected.short
+      )[0]
       const formattedCities = cities.cidades.map((city, index) => {
         return {
           id: index,
-          value: city
+          value: city,
         }
       })
       this.allCities = formattedCities
     },
     validate() {
-      if(!this.form.name) {
-        this.$toast.open({message: "Por favor preencha seu nome completo", type: "warning"})
+      if (!this.form.name) {
+        this.$toast.open({
+          message: 'Por favor preencha seu nome completo',
+          type: 'warning',
+        })
         return false
       }
-      if(!this.form.email) {
-        this.$toast.open({message: "Por favor preencha seu email", type: "warning"})
+      if (!this.form.email) {
+        this.$toast.open({
+          message: 'Por favor preencha seu email',
+          type: 'warning',
+        })
         return false
       }
-      const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      const regexEmail =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       if (!this.form.email.match(regexEmail)) {
-        this.$toast.open({message: "Por favor insira um email válido", type: "warning"})
+        this.$toast.open({
+          message: 'Por favor insira um email válido',
+          type: 'warning',
+        })
         return false
       }
       // if(!this.form.state) {
@@ -255,21 +478,27 @@ export default({
     },
     getDataToSubmit() {
       return {
-        name: this.form.name, 
-        email: this.form.email.toLowerCase(), 
-        state: this.form.state, 
+        name: this.form.name,
+        email: this.form.email.toLowerCase(),
+        state: this.form.state,
         city: this.form.city,
         created_at: new Date(),
       }
     },
     handleSubmit(deviceType) {
-      if(!this.isSubscribed && this.validate()) {
+      if (!this.isSubscribed && this.validate()) {
         try {
           this.$axios.setHeader('apikey', process.env.SUPABASE_API_KEY)
-          this.$axios.post('leads', {...this.getDataToSubmit(), device: deviceType})
+          this.$axios.post('leads', {
+            ...this.getDataToSubmit(),
+            device: deviceType,
+          })
           this.isSubscribed = true
         } catch (err) {
-          this.$toast.open({message: "Falha ao enviar dados, por favor tente novamente.", type: "error"})
+          this.$toast.open({
+            message: 'Falha ao enviar dados, por favor tente novamente.',
+            type: 'error',
+          })
         }
       }
     },
@@ -277,35 +506,38 @@ export default({
       try {
         const deviceType = this.smAndDown ? 'mobile' : 'web'
         this.$axios.setHeader('apikey', process.env.SUPABASE_API_KEY)
-        this.$axios.post('analytics', {type: typeData, device: deviceType})
+        this.$axios.post('analytics', { type: typeData, device: deviceType })
       } catch (err) {
         console.error(err)
       }
     },
     shareViaWhatsApp() {
-      let header = "Oi oi, tudo bem? :)"
+      let header = 'Oi oi, tudo bem? :)'
       const name = this.form.name?.split(' ')[0]
-      if(name) header = `Oi oi, aqui é a ${this.form.name.split(' ')[0]} :)`
+      if (name) header = `Oi oi, aqui é a ${this.form.name.split(' ')[0]} :)`
       const message = window.encodeURIComponent(`${header}
       👋 Vim te convidar para a 2ª nomeação de Jovens Embaixadores da Paz, com discussões sobre "Qual é o seu legado?"
       Conheça experiências e lições de vida de jovens de destaque, e saiba como eles superam os desafios da vida para construir um legado!!
       📆 Sábado, 24 de agosto, às 16 hrs 
       
       Inscreva-se agora pelo link: https://embaixadorespaz.vercel.app/`)
-      window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank').focus()
+      window
+        .open(`https://api.whatsapp.com/send?text=${message}`, '_blank')
+        .focus()
       this.sendAnalyticsData('share_whatsapp')
     },
-    followInstagram(){
-      console.log("OI Insta")
-      window.open("https://www.instagram.com/ysplatinamerica/", '_blank').focus()
+    followInstagram() {
+      console.log('OI Insta')
+      window
+        .open('https://www.instagram.com/ysplatinamerica/', '_blank')
+        .focus()
     },
-    followFacebook(){
-      window.open("https://www.facebook.com/ysplatinamerica", '_blank').focus()
-    }
-  }
-})
+    followFacebook() {
+      window.open('https://www.facebook.com/ysplatinamerica', '_blank').focus()
+    },
+  },
+}
 </script>
-
 
 <style lang="scss" scoped>
 .page {
@@ -346,7 +578,7 @@ export default({
         font-weight: 800;
         color: #f2de79;
         margin: 0px 0 -48px 0;
-        &-top { 
+        &-top {
           font-size: 58px;
           margin: 24px 0 0 0;
         }
@@ -356,7 +588,7 @@ export default({
         font-weight: 700;
         color: #f2de79;
         margin: 8px 0 -38px 0;
-        &-top { 
+        &-top {
           font-size: 38px;
           margin: 24px 0 0 0;
         }
@@ -544,7 +776,7 @@ export default({
     }
 
     .input {
-      &-w[type=text] {
+      &-w[type='text'] {
         padding: 12px 20px;
         margin: 6px 0;
         display: inline-block;
@@ -553,7 +785,7 @@ export default({
         box-sizing: border-box;
         color: #f2de79;
       }
-      &-m[type=text] {
+      &-m[type='text'] {
         padding: 8px 6px;
         margin: 6px 0;
         padding-left: 12px;
@@ -581,44 +813,44 @@ export default({
     }
 
     .select-state {
-        -webkit-appearance: none;
-        color: #f2de79;
-        margin: 0 4px;
-        border: 2px solid #f2de79;
-        border-radius: 24px;
-        text-align: center;
-        cursor: pointer;
-        overflow:hidden;
-        white-space:nowrap; 
-        text-overflow:ellipsis;
-        transition-duration: 0.4s;
+      -webkit-appearance: none;
+      color: #f2de79;
+      margin: 0 4px;
+      border: 2px solid #f2de79;
+      border-radius: 24px;
+      text-align: center;
+      cursor: pointer;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      transition-duration: 0.4s;
 
-        option {
-          color: #223254;
-          text-overflow:ellipsis;
-          overflow:hidden;
-        }
+      option {
+        color: #223254;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
 
-        option[value=""][disabled] {
-          display: none
-        }
-          
-        &:focus {
-          outline: none;
-          border: 2px solid #fada39;
-        }
+      option[value=''][disabled] {
+        display: none;
+      }
 
-        &:hover {
-          outline: none;
-          border: 2px solid #fada39;
-          color: #fada39;
-        }
+      &:focus {
+        outline: none;
+        border: 2px solid #fada39;
+      }
 
-        &[disabled] {
-          outline: none;
-          border: 2px solid #fada3998;
-          cursor: not-allowed;
-        }
+      &:hover {
+        outline: none;
+        border: 2px solid #fada39;
+        color: #fada39;
+      }
+
+      &[disabled] {
+        outline: none;
+        border: 2px solid #fada3998;
+        cursor: not-allowed;
+      }
     }
 
     .select-state-w {
@@ -640,29 +872,29 @@ export default({
     }
 
     .iconify {
-    transition-duration: 0.4s;
-    cursor: pointer;
-    margin-left: 12px;
+      transition-duration: 0.4s;
+      cursor: pointer;
+      margin-left: 12px;
 
-      &:hover { 
+      &:hover {
         margin-bottom: 6px;
       }
     }
   }
   .page-background {
-    position: fixed; 
-    top: -50%; 
-    left: -50%; 
-    width: 200%; 
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
     height: 200%;
 
     &__background {
-      position: absolute; 
-      top: 0; 
-      left: 0; 
-      right: 0; 
-      bottom: 0; 
-      margin: auto; 
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
       min-width: 50%;
       min-height: 50%;
     }
