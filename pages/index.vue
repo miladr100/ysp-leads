@@ -514,11 +514,11 @@ export default {
     shareViaWhatsApp() {
       let header = 'Oi oi, tudo bem? :)'
       const name = this.form.name?.split(' ')[0]
-      if (name) header = `Oi oi, aqui é a ${this.form.name.split(' ')[0]} :)`
+      if (name) header = `Oi oi, aqui é ${this.form.name.split(' ')[0]} :)`
       const message = window.encodeURIComponent(`${header}
       👋 Vim te convidar para a 2ª nomeação de Jovens Embaixadores da Paz, com discussões sobre "Qual é o seu legado?"
       Conheça experiências e lições de vida de jovens de destaque, e saiba como eles superam os desafios da vida para construir um legado!!
-      📆 Sábado, 24 de agosto, às 16 hrs 
+      📆 Sábado, 14 de agosto, às 16 hrs 
       
       Inscreva-se agora pelo link: https://embaixadorespaz.vercel.app/`)
       window
