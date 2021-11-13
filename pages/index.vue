@@ -39,10 +39,6 @@
         </div>
       </div>
 
-      <!-- <p class="page-content__title-m opacity--4 top--un12" >VEM AÍ</p>
-      <p class="page-content__title-m opacity--3" >VEM AÍ</p>
-      <p class="page-content__title-m" >VEM AÍ</p> -->
-
       <p class="page-content__title-m page-content__title-m-top">
         2º Nomeação de
       </p>
@@ -50,16 +46,13 @@
       <p class="page-content__title-m">Embaixadores</p>
       <p class="page-content__title-m">pela Paz</p>
 
-      <!-- <p class="page-content__subtitle-m">Um dos maiores e mais prestigiados</p>
-      <p class="page-content__subtitle-m top--un4">eventos do YSP do ano de 2021.</p> -->
-
       <p class="page-content__text mt-16">
         Um evento que contará com vários jovens de
       </p>
-      <p class="page-content__text top--un4">
+      <p class="page-content__text">
         destaque, das mais diversas áreas, discutindo
       </p>
-      <p class="page-content__text top--un4">
+      <p class="page-content__text">
         sobre o que mais importa para você!
       </p>
 
@@ -150,13 +143,13 @@
         </p>
         <div
           v-if="isSubscribed"
-          class="d-flex flex-row justify-center align-center top--un30 mb-4"
+          class="d-flex flex-row justify-center align-center mb-4"
         >
           <span>
             <p class="page-content__date-m">
               Agora é sua vez de contribuir com a paz!
             </p>
-            <p class="page-content__date-m top--un4">
+            <p class="page-content__date-m">
               Compartilhe o evento com seus amigos ;)
             </p>
           </span>
@@ -184,15 +177,15 @@
 
     <!--##### WEB -->
     <div v-else class="page-content d-flex flex-column align-center">
-      <div class="social-w d-flex flex-column align-center mt-12 ml-12">
-        <p class="page-content__date-w">Siga-nos</p>
+      <div class="social-w d-flex flex-column align-center mt-12 mr-14">
+        <p class="social-w-text">Siga-nos</p>
         <div @click="followInstagram()">
           <span
             class="iconify"
             data-icon="mdi:instagram"
             style="color: #c13584"
-            data-width="42"
-            data-height="42"
+            data-width="52"
+            data-height="52"
           ></span>
         </div>
         <div @click="followFacebook()">
@@ -200,120 +193,44 @@
             class="iconify"
             data-icon="mdi:facebook"
             style="color: #3b5998"
-            data-width="42"
-            data-height="42"
+            data-width="52"
+            data-height="52"
           ></span>
         </div>
       </div>
+      <img class="img-ysp-w mt-12" src="~/static/img/ysp_logo.png" />
 
-      <!-- <p class="page-content__title-w opacity--2 top--un110" >VEM AÍ</p>
-      <p class="page-content__title-w" >VEM AÍ</p> -->
+      <p class="page-content__moto-w mt-10">3ª Nomeação de Jovens <br/> Embaixadores da Paz</p>
+      <p class="page-content__special-w">A Herança que eu carrego</p>
 
-      <p class="page-content__title-w page-content__title-w-top">
-        2º Nomeação de
-      </p>
-      <p class="page-content__title-w">Jovens</p>
-      <p class="page-content__title-w">Embaixadores</p>
-      <p class="page-content__title-w">pela Paz</p>
-
-      <!-- <p class="page-content__subtitle-w">Um dos maiores e mais prestigiados</p>
-      <p class="page-content__subtitle-w top--un14">eventos do YSP do ano de 2021.</p> -->
-
-      <p class="page-content__moto-w">Qual o seu legado?</p>
-
-      <p class="page-content__date-w">Dia 14 de agosto às 16 horas</p>
+      <p class="page-content__date-w">Dia 20 de novembro às 16 horas</p>
+      <p class="page-content__date-w">Assista ao vivo nas redes sociais do YSP Latin America</p>
 
       <div>
-        <button
-          v-if="showButton"
-          class="button button__subscribe-w"
-          @click="subscribe()"
-        >
-          Inscreva-se
-        </button>
-        <form
-          v-if="!showButton && !isSubscribed"
-          class="form-w d-flex flex-column"
-        >
-          <div class="d-flex align-center justify-space-between">
-            <label class="label-w" for="name">Nome</label>
-            <input
-              id="name"
-              v-model="form.name"
-              style="width: 100%"
-              class="input-w"
-              type="text"
-              name="name"
-              placeholder="Digite seu nome completo"
-            />
-          </div>
-          <div class="d-flex align-center justify-space-between">
-            <label class="label-w" for="email">Email</label>
-            <input
-              id="email"
-              v-model="form.email"
-              style="width: 100%"
-              class="input-w"
-              type="text"
-              name="email"
-              placeholder="Digite seu melhor email"
-            />
-          </div>
-          <div class="d-flex align-center justify-space-between mt-1">
-            <select
-              id="state"
-              v-model="form.state"
-              class="select-state select-state-w"
-              name="state"
-              form="stateform"
-            >
-              <option value="" disabled="disabled" selected="selected">
-                Estado
-              </option>
-              <option
-                v-for="(state, i) in allStates"
-                :key="i"
-                :value="state.value"
-              >
-                {{ state.short }}
-              </option>
-            </select>
-
-            <select
-              id="city"
-              v-model="form.city"
-              :disabled="allCities.length == 0"
-              style="width: 100%"
-              class="select-state select-state-w"
-              name="city"
-              form="stateform"
-            >
-              <option value="" disabled="disabled" selected="selected">
-                Cidade
-              </option>
-              <option
-                v-for="(city, i) in allCities"
-                :key="i"
-                :value="city.value"
-              >
-                {{ city.value }}
-              </option>
-            </select>
-          </div>
-        </form>
+        <YSubscriptionForm
+          class="page-content__subscription-form-w d-flex justify-center ml-4 mt-6"
+          button-title="inscreva-se"
+          submit-button-title="Enviar"
+          :is-mobile="smAndDown"
+          :states="allStates"
+          :cities="allCities"
+          :is-subscribed="isSubscribed"
+          @chosedState="getAndSetStaticCities"
+          @submitForm="handleSubmit"
+        />
 
         <p v-if="isSubscribed" class="page-content__subscribed-w">
           Inscrição realizada com sucesso!
         </p>
         <div
           v-if="isSubscribed"
-          class="d-flex flex-row justify-center align-center top--un30 mb-4"
+          class="d-flex flex-row justify-center align-center mb-4"
         >
           <span>
             <p class="page-content__date-w">
               Agora é sua vez de contribuir com a paz!
             </p>
-            <p class="page-content__date-w top--un4">
+            <p class="page-content__date-w">
               Compartilhe o evento com seus amigos ;)
             </p>
           </span>
@@ -328,15 +245,6 @@
           </div>
         </div>
       </div>
-
-      <button
-        v-if="!showButton && !isSubscribed"
-        class="button button__send-w"
-        @click="handleSubmit('web')"
-      >
-        Enviar
-      </button>
-      <img v-else class="img-ysp-w" src="~/static/img/ysp_logo.png" />
     </div>
     <div class="page-background">
       <img
@@ -350,14 +258,16 @@
 <script>
 import statesAndCities from '~/static/json/estados-cidades.json'
 
+const ACTUAL_EMBAIXADORES_EVENT = 3
+
 export default {
   name: 'YspLeadsIndex',
-  async asyncData({ $axios }) {
-    const allStatesOfBrazil = await $axios.$get(
-      `${process.env.brasilApi}ibge/uf/v1`
-    )
-    return { allStatesOfBrazil }
-  },
+  // async asyncData({ $axios }) {
+  //   const allStatesOfBrazil = await $axios.$get(
+  //     `${process.env.brasilApi}ibge/uf/v1`
+  //   )
+  //   return { allStatesOfBrazil }
+  // },
   data() {
     return {
       showButton: true,
@@ -387,24 +297,13 @@ export default {
       return this.$vuetify.breakpoint.xsOnly
     },
   },
-  watch: {
-    'form.state'(paylod) {
-      if (paylod) {
-        const chosenState = this.allStates.find(
-          (state) => state.value === paylod
-        )
-        this.form.city = ''
-        this.getAndSetCitiesByStateCodeAsync(chosenState)
-      }
-    },
-  },
   mounted() {
-    this.allStates = this.formatDataFromIbge(this.allStatesOfBrazil)
-    this.sendAnalyticsData()
+    this.getAndSetStaticStates();
+    // this.sendAnalyticsData()
   },
   methods: {
     subscribe() {
-      this.sendAnalyticsData('button_subscribe')
+      // this.sendAnalyticsData('button_subscribe')
       this.showButton = false
     },
     formatDataFromIbge(states) {
@@ -419,18 +318,16 @@ export default {
         ]
       }, [])
     },
-    getAndSetCitiesByStateCodeAsync(state) {
-      try {
-        // const { data } = await this.$axios.get(
-        // `${process.env.ibgeApi}localidades/estados/${state.id}/municipios`
-        // )
-        // this.allCities = this.formatDataFromIbge(data)
-        this.getStaticCities(state)
-      } catch (err) {
-        console.error(err)
-      }
+    getAndSetStaticStates() {
+      this.allStates = statesAndCities.estados.map((state, index) => {
+        return {
+          id: index,
+          short: state.sigla,
+          value: state.nome,
+        }
+      })
     },
-    getStaticCities(stateSelected) {
+    getAndSetStaticCities(stateSelected) {
       const cities = statesAndCities.estados.filter(
         (state) => state.sigla === stateSelected.short
       )[0]
@@ -442,65 +339,23 @@ export default {
       })
       this.allCities = formattedCities
     },
-    validate() {
-      if (!this.form.name) {
-        this.$toast.open({
-          message: 'Por favor preencha seu nome completo',
-          type: 'warning',
-        })
-        return false
-      }
-      if (!this.form.email) {
-        this.$toast.open({
-          message: 'Por favor preencha seu email',
-          type: 'warning',
-        })
-        return false
-      }
-      const regexEmail =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      if (!this.form.email.match(regexEmail)) {
-        this.$toast.open({
-          message: 'Por favor insira um email válido',
-          type: 'warning',
-        })
-        return false
-      }
-      // if(!this.form.state) {
-      //   this.$toast.open({message: "Por favor selecione seu estado", type: "warning"})
-      //   return false
+    handleSubmit(formData) {
+      console.log(formData, ACTUAL_EMBAIXADORES_EVENT)
+      this.isSubscribed = true
+      // try {
+      //   this.$axios.setHeader('apikey', process.env.SUPABASE_API_KEY)
+      //   this.$axios.post('leads', {
+      //     ...formData.form,
+      //     device: formData.type,
+      //     edition: ACTUAL_EMBAIXADORES_EVENT,
+      //   })
+      //   this.isSubscribed = true
+      // } catch (err) {
+      //   this.$toast.open({
+      //     message: 'Falha ao enviar dados, por favor tente novamente.',
+      //     type: 'error',
+      //   })
       // }
-      // if(!this.form.city) {
-      //   this.$toast.open({message: "Por favor selecione sua cidade", type: "warning"})
-      //   return false
-      // }
-      return true
-    },
-    getDataToSubmit() {
-      return {
-        name: this.form.name,
-        email: this.form.email.toLowerCase(),
-        state: this.form.state,
-        city: this.form.city,
-        created_at: new Date(),
-      }
-    },
-    handleSubmit(deviceType) {
-      if (!this.isSubscribed && this.validate()) {
-        try {
-          this.$axios.setHeader('apikey', process.env.SUPABASE_API_KEY)
-          this.$axios.post('leads', {
-            ...this.getDataToSubmit(),
-            device: deviceType,
-          })
-          this.isSubscribed = true
-        } catch (err) {
-          this.$toast.open({
-            message: 'Falha ao enviar dados, por favor tente novamente.',
-            type: 'error',
-          })
-        }
-      }
     },
     sendAnalyticsData(typeData = 'page_read') {
       try {
@@ -540,12 +395,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$primary-font: 'Lato', sans-serif;
+$color-primary:  #f2de79;
+$color-primary-dark:  #fada39;
+
 .page {
   .social {
     &-w {
       position: absolute;
       z-index: 3;
-      left: 0;
+      right: 0;
+      bottom: 0;
+      &-text {
+        font-size: 28px;
+        font-weight: 500;
+        color: $color-primary;
+        text-align: center;
+        margin: -4px 0 0 0;
+      }
     }
     &-m {
       position: fixed;
@@ -572,85 +439,62 @@ export default {
     position: relative;
     z-index: 2;
 
-    &__title {
-      &-w {
-        font-size: 78px;
-        font-weight: 800;
-        color: #f2de79;
-        margin: 0px 0 -48px 0;
-        &-top {
-          font-size: 58px;
-          margin: 24px 0 0 0;
-        }
-      }
-      &-m {
-        font-size: 48px;
-        font-weight: 700;
-        color: #f2de79;
-        margin: 8px 0 -38px 0;
-        &-top {
-          font-size: 38px;
-          margin: 24px 0 0 0;
-        }
-      }
-    }
-
-    &__subtitle {
-      &-w {
-        font-size: 34px;
-        font-weight: 400;
-        color: #f2de79;
-        text-align: center;
-        margin: 48px 0 0 0;
-      }
-      &-m {
-        font-size: 18px;
-        font-weight: 500;
-        color: #f2de79;
-        text-align: center;
-        margin: 48px 0 0 0;
-      }
-    }
-
     &__text {
       font-size: 14px;
       font-weight: 400;
-      color: #f2de79;
+      color: $color-primary;
       text-align: center;
       margin: 28px 0 0 0;
     }
 
     &__moto {
       &-w {
-        font-size: 36px;
-        font-weight: 800;
-        color: #f2de79;
+        font-family: $primary-font;
+        font-size: 46px;
+        font-weight: 900;
+        color: $color-primary;
         text-align: center;
         text-transform: uppercase;
-        margin: 42px 0 0 0;
+        letter-spacing: 2px;
       }
       &-m {
         font-size: 24px;
         font-weight: 800;
-        color: #f2de79;
+        color: $color-primary;
         text-align: center;
         text-transform: uppercase;
         margin: 24px 0 0 0;
       }
     }
 
+    &__special {
+      &-w {
+        font-family: 'Shadows Into Light', cursive;
+        font-size: 68px;
+        font-weight: 900;
+        color: $color-primary;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 6px;
+      }
+      &-m {
+
+      }
+    }
+
     &__date {
       &-w {
-        font-size: 20px;
+        font-family: $primary-font;
+        font-size: 28px;
         font-weight: 500;
-        color: #f2de79;
+        color: $color-primary;
         text-align: center;
         margin: -4px 0 0 0;
       }
       &-m {
         font-size: 14px;
         font-weight: 500;
-        color: #f2de79;
+        color: $color-primary;
         text-align: center;
         margin: 4px 0 0 0;
       }
@@ -658,33 +502,35 @@ export default {
 
     &__subscribed {
       &-w {
+        font-family: $primary-font;
         font-size: 36px;
         font-weight: 400;
-        color: #f2de79;
+        color: $color-primary;
         text-align: center;
-        margin: 36px 0;
       }
       &-m {
+        font-family: $primary-font;
         font-size: 24px;
         font-weight: 500;
-        color: #f2de79;
+        color: $color-primary;
         text-align: center;
-        margin: 42px 0;
       }
     }
 
     .button {
       transition-duration: 0.4s;
-      color: #f2de79;
+      color: $color-primary;
       text-transform: uppercase;
-      border: 2px solid #f2de79;
+      border: 2px solid $color-primary;
       border-radius: 60px;
       cursor: pointer;
+
       &:hover {
         outline: none;
-        border: 2px solid #fada39;
-        color: #fada39;
+        border: 2px solid $color-primary-dark;
+        color: $color-primary-dark;
       }
+
       &__subscribe {
         &-w {
           font-size: 46px;
@@ -699,6 +545,7 @@ export default {
           margin: 42px 0;
         }
       }
+      
       &__send {
         &-w {
           font-size: 18px;
@@ -715,45 +562,9 @@ export default {
       }
     }
 
-    .opacity {
-      &--1 {
-        opacity: 0.7;
-      }
-      &--2 {
-        opacity: 0.5;
-      }
-      &--3 {
-        opacity: 0.35;
-      }
-      &--4 {
-        opacity: 0.18;
-      }
-    }
-
-    .top {
-      &--un4 {
-        margin-top: -4px;
-      }
-      &--un14 {
-        margin-top: -14px;
-      }
-      &--un12 {
-        margin-top: -12px;
-      }
-      &--un30 {
-        margin-top: -30px;
-      }
-      &--un70 {
-        margin-top: -70px;
-      }
-      &--un110 {
-        margin-top: -110px;
-      }
-    }
-
     .img-ysp {
       &-w {
-        height: 70px;
+        height: 86px;
       }
       &-m {
         height: 40px;
@@ -764,13 +575,13 @@ export default {
       &-w {
         font-size: 20px;
         font-weight: 500;
-        color: #f2de79;
+        color: $color-primary;
         margin-right: 32px;
       }
       &-m {
         font-size: 12px;
         font-weight: 500;
-        color: #f2de79;
+        color: $color-primary;
         margin-right: 26px;
       }
     }
@@ -780,20 +591,20 @@ export default {
         padding: 12px 20px;
         margin: 6px 0;
         display: inline-block;
-        border: 2px solid #f2de79;
+        border: 2px solid $color-primary;
         border-radius: 24px;
         box-sizing: border-box;
-        color: #f2de79;
+        color: $color-primary;
       }
       &-m[type='text'] {
         padding: 8px 6px;
         margin: 6px 0;
         padding-left: 12px;
         display: inline-block;
-        border: 2px solid #f2de79;
+        border: 2px solid $color-primary;
         border-radius: 24px;
         box-sizing: border-box;
-        color: #f2de79;
+        color: $color-primary;
       }
     }
 
@@ -809,14 +620,14 @@ export default {
 
     input:focus {
       outline: none;
-      border: 2px solid #fada39;
+      border: 2px solid $color-primary-dark;
     }
 
     .select-state {
       -webkit-appearance: none;
-      color: #f2de79;
+      color: $color-primary;
       margin: 0 4px;
-      border: 2px solid #f2de79;
+      border: 2px solid $color-primary;
       border-radius: 24px;
       text-align: center;
       cursor: pointer;
@@ -837,13 +648,13 @@ export default {
 
       &:focus {
         outline: none;
-        border: 2px solid #fada39;
+        border: 2px solid $color-primary-dark;
       }
 
       &:hover {
         outline: none;
-        border: 2px solid #fada39;
-        color: #fada39;
+        border: 2px solid $color-primary-dark;
+        color: $color-primary-dark;
       }
 
       &[disabled] {
@@ -881,6 +692,7 @@ export default {
       }
     }
   }
+
   .page-background {
     position: fixed;
     top: -50%;
