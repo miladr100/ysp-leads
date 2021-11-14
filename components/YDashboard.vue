@@ -5,6 +5,11 @@
                 <v-btn class="mb-2" @click="update()">Atualizar</v-btn>
                 <v-btn @click="exit()">Sair</v-btn>
             </v-col>
+            <v-col cols="6" lg="1" md="2" sm="4" xs="6" class="d-flex align-center justify-center ">
+                <v-btn fab dark color="teal" @click="dialog = true">
+                    <v-icon dark> mdi-cog-outline</v-icon>
+                </v-btn>
+            </v-col>
             <v-col cols="6" lg="2" md="3" sm="4" xs="6">
                 <v-card>
                     <v-card-title class="d-flex justify-center">{{numbOfSubscriptions}}</v-card-title>
@@ -36,37 +41,72 @@
             :items-per-page="5"
             class="elevation-1 mt-2"
         ></v-data-table>
+
+        <v-dialog
+            v-model="dialog"
+            style="overflow-y: unset;"
+            max-width="500"
+            >
+                <v-card>
+                    <v-card-title>Ferramentas</v-card-title>
+                        <v-row>
+                            <v-col cols="10" class="d-flex align-center justify-center">
+                                <v-card-text class="ml-2 font-weight-bold">Delete by Id</v-card-text>
+                                <v-text-field
+                                    v-model="deleteById"
+                                    :counter="4"
+                                    label="Lead ID"
+                                    required
+                                ></v-text-field>
+                                <v-btn class="ml-12" depressed color="error" @click="deleteLeadByIdAssync()">Delete</v-btn>
+                            </v-col>
+                            <v-col cols="10" class="d-flex align-center justify-center">
+                                <v-card-text class="ml-2 font-weight-bold">Change event edition</v-card-text>
+                                <v-select
+                                    v-model="actualEmbaixadoresEvent"
+                                    :items="[2,3]"
+                                    label="Select edition"
+                                    required
+                                ></v-select>
+                                <v-btn class="ml-8" depressed color="success" @click="update()">Change</v-btn>
+                            </v-col>
+                        </v-row>
+                </v-card>
+        </v-dialog>
     </div>
 </template>
 
 <script>
-
-  export default {
+export default {
     name: "YDashboard",
     components: {
     },
     data () {
-      return {
-        allLeads: [],
-        numbOfSubscriptions: 0,
-        numbOfAccess: 0,
-        numbOfButtonSubscribe: 0,
-        numbOfShareWhatsApp: 0,
-        headers: [
-            { text: 'ID', value: 'id' },
-            { text: 'Criado em', value: 'created_at' },
-            {
-                text: 'Nome',
-                align: 'start',
-                sortable: false,
-                value: 'name',
-            },
-            { text: 'Email', value: 'email', sortable: false },
-            { text: 'Estado', value: 'state', align: 'start', sortable: false },
-            { text: 'Cidade', value: 'city', align: 'start', sortable: false },
-            { text: 'Dispositivo', value: 'device', sortable: false },
-        ],
-      }
+        return {
+            actualEmbaixadoresEvent: 3,
+            allLeads: [],
+            allOldLeads: [],
+            numbOfSubscriptions: 0,
+            numbOfAccess: 0,
+            numbOfButtonSubscribe: 0,
+            numbOfShareWhatsApp: 0,
+            dialog: false,
+            deleteById: '',
+            headers: [
+                { text: 'ID', value: 'id' },
+                { text: 'Criado em', value: 'created_at' },
+                {
+                    text: 'Nome',
+                    align: 'start',
+                    sortable: false,
+                    value: 'name',
+                },
+                { text: 'Email', value: 'email', sortable: false },
+                { text: 'Estado', value: 'state', align: 'start', sortable: false },
+                { text: 'Cidade', value: 'city', align: 'start', sortable: false },
+                { text: 'Dispositivo', value: 'device', sortable: false },
+            ],
+        }
     },
     async mounted() {
         await this.getAllLeadsAsync()
@@ -91,10 +131,23 @@
             try {
                 this.$axios.setHeader('apikey', process.env.SUPABASE_API_KEY)
                 const { data } = await this.$axios.get('leads')
-                this.allLeads = this.organizeLeads(data)
+                this.allLeads = this.organizeLeads(data.filter(lead => lead.edition === this.actualEmbaixadoresEvent))
+                this.allOldLeads = this.organizeLeads(data.filter(lead => lead.edition !== this.actualEmbaixadoresEvent))
                 this.numbOfSubscriptions = this.allLeads.length
             } catch (err) {
                 this.$toast.open({message: "Falha ao obter leads", type: "error"})
+            }
+        },
+        async deleteLeadByIdAssync() {
+            try {
+                this.$axios.setHeader('apikey', process.env.SUPABASE_API_KEY)
+                await this.$axios.delete(`leads?id${this.deleteById}`)
+                this.$toast.open({ message: "Lead deletado com sucesso!", type: "success" })
+                this.update(false)
+                this.deleteById = '';
+                this.dialog = false;
+            } catch (err) {
+                this.$toast.open({message: "Falha ao deletar lead", type: "error"})
             }
         },
         organizeLeads(arrLeads) {
@@ -107,14 +160,14 @@
                 return lead
             })
         },
-        async update() {
+        async update(withMessage = true) {
             await this.getAllLeadsAsync()
             await this.getAccessAnalyticsAsync()
-            this.$toast.open({message: "Dados atualizados com sucesso!", type: "success"})
+            if(withMessage) this.$toast.open({message: "Dados atualizados com sucesso!", type: "success"})
         },
         exit() {
             this.$store.commit('updateIsLogged', false)
         }
     }
-  }
+}
 </script>
