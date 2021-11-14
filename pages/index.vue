@@ -38,107 +38,28 @@
           ></span>
         </div>
       </div>
+      <img class="img-ysp-m mt-12" src="~/static/img/ysp_logo.png" />
 
-      <p class="page-content__title-m page-content__title-m-top">
-        2º Nomeação de
-      </p>
-      <p class="page-content__title-m">Jovens</p>
-      <p class="page-content__title-m">Embaixadores</p>
-      <p class="page-content__title-m">pela Paz</p>
+      <p class="page-content__moto-m mt-10">3ª Nomeação de Jovens <br/> Embaixadores da Paz</p>
+      <p class="page-content__special-m">A Herança que eu carrego</p>
 
-      <p class="page-content__text mt-16">
-        Um evento que contará com vários jovens de
-      </p>
-      <p class="page-content__text">
-        destaque, das mais diversas áreas, discutindo
-      </p>
-      <p class="page-content__text">
-        sobre o que mais importa para você!
-      </p>
-
-      <p class="page-content__moto-m">Qual o seu legado?</p>
-
-      <p class="page-content__date-m">Dia 14 de agosto às 16 horas</p>
-
+      <p class="page-content__date-m">Dia 20 de novembro às 16 horas</p>
+      <p class="page-content__date-m">Assista ao vivo nas redes sociais do <br/> YSP Latin America</p>
+    
       <div>
-        <button
-          v-if="showButton"
-          class="button button__subscribe-m"
-          @click="subscribe()"
-        >
-          Inscreva-se
-        </button>
-        <form
-          v-if="!showButton && !isSubscribed"
-          class="form-m d-flex flex-column"
-        >
-          <div class="d-flex align-center justify-space-between">
-            <label class="label-m" for="name">Nome</label>
-            <input
-              id="name"
-              v-model="form.name"
-              style="width: 100%"
-              class="input-m"
-              type="text"
-              name="name"
-              placeholder="Digite seu nome completo"
-            />
-          </div>
-          <div class="d-flex align-center justify-space-between">
-            <label class="label-m" for="email">Email</label>
-            <input
-              id="email"
-              v-model="form.email"
-              style="width: 100%"
-              class="input-m"
-              type="text"
-              name="email"
-              placeholder="Digite seu melhor email"
-            />
-          </div>
-          <div class="d-flex align-center justify-space-between mt-1">
-            <select
-              id="state"
-              v-model="form.state"
-              class="select-state select-state-m"
-              name="state"
-              form="stateform"
-            >
-              <option value="" disabled="disabled" selected="selected">
-                Estado
-              </option>
-              <option
-                v-for="(state, i) in allStates"
-                :key="i"
-                :value="state.value"
-              >
-                {{ state.short }}
-              </option>
-            </select>
+        <YSubscriptionForm
+          class="page-content__subscription-form-m d-flex justify-center ml-4 mt-6"
+          button-title="inscreva-se"
+          submit-button-title="Enviar"
+          :is-mobile="smAndDown"
+          :states="allStates"
+          :cities="allCities"
+          :is-subscribed="isSubscribed"
+          @chosedState="getAndSetStaticCities"
+          @submitForm="handleSubmit"
+        />
 
-            <select
-              id="city"
-              v-model="form.city"
-              :disabled="allCities.length == 0"
-              style="width: 100%"
-              class="select-state select-state-m"
-              name="city"
-              form="stateform"
-            >
-              <option value="" disabled="disabled" selected="selected">
-                Cidade
-              </option>
-              <option
-                v-for="(city, i) in allCities"
-                :key="i"
-                :value="city.value"
-              >
-                {{ city.value }}
-              </option>
-            </select>
-          </div>
-        </form>
-        <p v-if="isSubscribed" class="page-content__subscribed-m">
+        <p v-if="isSubscribed" class="page-content__subscribed-m mt-4">
           Inscrição realizada com sucesso!
         </p>
         <div
@@ -147,10 +68,10 @@
         >
           <span>
             <p class="page-content__date-m">
-              Agora é sua vez de contribuir com a paz!
+              Contribua com a paz!
             </p>
             <p class="page-content__date-m">
-              Compartilhe o evento com seus amigos ;)
+              Compartilhe com seus amigos ;)
             </p>
           </span>
           <div @click="shareViaWhatsApp()">
@@ -158,21 +79,12 @@
               class="iconify"
               data-icon="mdi:whatsapp"
               style="color: #fada39"
-              data-width="30"
-              data-height="30"
+              data-width="36"
+              data-height="36"
             ></span>
           </div>
         </div>
       </div>
-
-      <button
-        v-if="!showButton && !isSubscribed"
-        class="button button__send-m"
-        @click="handleSubmit('mobile')"
-      >
-        Enviar
-      </button>
-      <img v-else class="img-ysp-m" src="~/static/img/ysp_logo.png" />
     </div>
 
     <!--##### WEB -->
@@ -273,12 +185,7 @@ export default {
       showButton: true,
       isSubscribed: false,
       followBoxMobile: true,
-      form: {
-        name: '',
-        email: '',
-        state: '',
-        city: '',
-      },
+      formName: '',
       allStates: [],
       allCities: [],
     }
@@ -340,22 +247,21 @@ export default {
       this.allCities = formattedCities
     },
     handleSubmit(formData) {
-      console.log(formData, ACTUAL_EMBAIXADORES_EVENT)
-      this.isSubscribed = true
-      // try {
-      //   this.$axios.setHeader('apikey', process.env.SUPABASE_API_KEY)
-      //   this.$axios.post('leads', {
-      //     ...formData.form,
-      //     device: formData.type,
-      //     edition: ACTUAL_EMBAIXADORES_EVENT,
-      //   })
-      //   this.isSubscribed = true
-      // } catch (err) {
-      //   this.$toast.open({
-      //     message: 'Falha ao enviar dados, por favor tente novamente.',
-      //     type: 'error',
-      //   })
-      // }
+      try {
+        this.$axios.setHeader('apikey', process.env.SUPABASE_API_KEY)
+        this.$axios.post('leads', {
+          ...formData.form,
+          device: formData.type,
+          edition: ACTUAL_EMBAIXADORES_EVENT,
+        })
+        this.formName = formData.form.name
+        this.isSubscribed = true
+      } catch (err) {
+        this.$toast.open({
+          message: 'Falha ao enviar dados, por favor tente novamente.',
+          type: 'error',
+        })
+      }
     },
     sendAnalyticsData(typeData = 'page_read') {
       try {
@@ -368,24 +274,19 @@ export default {
     },
     shareViaWhatsApp() {
       let header = 'Oi oi, tudo bem? :)'
-      const name = this.form.name?.split(' ')[0]
-      if (name) header = `Oi oi, aqui é ${this.form.name.split(' ')[0]} :)`
+      const name = this.formName?.split(' ')[0]
+      if (name) header = `Oi oi, aqui é ${this.formName.split(' ')[0]} :)`
       const message = window.encodeURIComponent(`${header}
-      👋 Vim te convidar para a 2ª nomeação de Jovens Embaixadores da Paz, com discussões sobre "Qual é o seu legado?"
-      Conheça experiências e lições de vida de jovens de destaque, e saiba como eles superam os desafios da vida para construir um legado!!
-      📆 Sábado, 14 de agosto, às 16 hrs 
+👋 Vim te convidar para a 3ª nomeação de Jovens Embaixadores da Paz, com a discussão sobre "A Herança que eu carrego"!!"
+Participe de um painel sobre o Dia da Consciência Negra, e entenda mais sobre nossa herança cultural africana. Além disso, teremos experiências e lições de vida de jovens líderes de projetos sociais, os novos Jovens Embaixadores da Paz
+🗓️ Sábado, 20 de novembro, às 16 hrs (horário de Brasília)    
       
       Inscreva-se agora pelo link: https://embaixadorespaz.vercel.app/`)
-      window
-        .open(`https://api.whatsapp.com/send?text=${message}`, '_blank')
-        .focus()
+      window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank').focus()
       this.sendAnalyticsData('share_whatsapp')
     },
     followInstagram() {
-      console.log('OI Insta')
-      window
-        .open('https://www.instagram.com/ysplatinamerica/', '_blank')
-        .focus()
+      window.open('https://www.instagram.com/ysplatinamerica/', '_blank').focus()
     },
     followFacebook() {
       window.open('https://www.facebook.com/ysplatinamerica', '_blank').focus()
@@ -396,6 +297,7 @@ export default {
 
 <style lang="scss" scoped>
 $primary-font: 'Lato', sans-serif;
+$secondary-font: 'Shadows Into Light', cursive;
 $color-primary:  #f2de79;
 $color-primary-dark:  #fada39;
 
@@ -458,18 +360,19 @@ $color-primary-dark:  #fada39;
         letter-spacing: 2px;
       }
       &-m {
+        font-family: $primary-font;
         font-size: 24px;
         font-weight: 800;
         color: $color-primary;
         text-align: center;
         text-transform: uppercase;
-        margin: 24px 0 0 0;
+        letter-spacing: 1px;
       }
     }
 
     &__special {
       &-w {
-        font-family: 'Shadows Into Light', cursive;
+        font-family: $secondary-font;
         font-size: 68px;
         font-weight: 900;
         color: $color-primary;
@@ -478,7 +381,13 @@ $color-primary-dark:  #fada39;
         letter-spacing: 6px;
       }
       &-m {
-
+        font-family: $secondary-font;
+        font-size: 32px;
+        font-weight: 900;
+        color: $color-primary;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 2px;
       }
     }
 
@@ -492,7 +401,8 @@ $color-primary-dark:  #fada39;
         margin: -4px 0 0 0;
       }
       &-m {
-        font-size: 14px;
+        font-family: $primary-font;
+        font-size: 16px;
         font-weight: 500;
         color: $color-primary;
         text-align: center;
@@ -510,7 +420,7 @@ $color-primary-dark:  #fada39;
       }
       &-m {
         font-family: $primary-font;
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 500;
         color: $color-primary;
         text-align: center;
@@ -567,118 +477,7 @@ $color-primary-dark:  #fada39;
         height: 86px;
       }
       &-m {
-        height: 40px;
-      }
-    }
-
-    .label {
-      &-w {
-        font-size: 20px;
-        font-weight: 500;
-        color: $color-primary;
-        margin-right: 32px;
-      }
-      &-m {
-        font-size: 12px;
-        font-weight: 500;
-        color: $color-primary;
-        margin-right: 26px;
-      }
-    }
-
-    .input {
-      &-w[type='text'] {
-        padding: 12px 20px;
-        margin: 6px 0;
-        display: inline-block;
-        border: 2px solid $color-primary;
-        border-radius: 24px;
-        box-sizing: border-box;
-        color: $color-primary;
-      }
-      &-m[type='text'] {
-        padding: 8px 6px;
-        margin: 6px 0;
-        padding-left: 12px;
-        display: inline-block;
-        border: 2px solid $color-primary;
-        border-radius: 24px;
-        box-sizing: border-box;
-        color: $color-primary;
-      }
-    }
-
-    .form {
-      &-w {
-        margin: 10px 0;
-        min-width: 34vw;
-      }
-      &-m {
-        margin: 18px 0;
-      }
-    }
-
-    input:focus {
-      outline: none;
-      border: 2px solid $color-primary-dark;
-    }
-
-    .select-state {
-      -webkit-appearance: none;
-      color: $color-primary;
-      margin: 0 4px;
-      border: 2px solid $color-primary;
-      border-radius: 24px;
-      text-align: center;
-      cursor: pointer;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      transition-duration: 0.4s;
-
-      option {
-        color: #223254;
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
-
-      option[value=''][disabled] {
-        display: none;
-      }
-
-      &:focus {
-        outline: none;
-        border: 2px solid $color-primary-dark;
-      }
-
-      &:hover {
-        outline: none;
-        border: 2px solid $color-primary-dark;
-        color: $color-primary-dark;
-      }
-
-      &[disabled] {
-        outline: none;
-        border: 2px solid #fada3998;
-        cursor: not-allowed;
-      }
-    }
-
-    .select-state-w {
-      padding: 8px 20px;
-      font-size: 20px;
-
-      option {
-        font-size: 14px;
-      }
-    }
-
-    .select-state-m {
-      padding: 10px 6px;
-      font-size: 14px;
-
-      option {
-        font-size: 14px;
+        height: 76px;
       }
     }
 
