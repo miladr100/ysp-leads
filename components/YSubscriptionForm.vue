@@ -331,7 +331,6 @@ $color-tertiary: #e78f12;
 
     &__subscribe {
         &-w {
-            // font-family: 'Quicksand';
             font-size: 36px;
             font-weight: 500;
             padding: 4px 36px;
