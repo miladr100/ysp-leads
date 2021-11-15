@@ -64,7 +64,7 @@
                                 <v-card-text class="ml-2 font-weight-bold">Change event edition</v-card-text>
                                 <v-select
                                     v-model="actualEmbaixadoresEvent"
-                                    :items="[2,3]"
+                                    :items="[3]"
                                     label="Select edition"
                                     required
                                 ></v-select>
@@ -118,7 +118,7 @@ export default {
                 this.$axios.setHeader('apikey', process.env.SUPABASE_API_KEY)
                 const { data } = await this.$axios.get('analytics?select=type')
                 const pageRead = data.filter(lead => lead.type === 'page_read')
-                const buttonSubscribe = data.filter(lead => lead.type === 'button_subscribe')
+                const buttonSubscribe = data.filter(lead => lead.type === 'click_subscribe')
                 const shareWhatsapp = data.filter(lead => lead.type === 'share_whatsapp')
                 this.numbOfAccess = pageRead.length
                 this.numbOfButtonSubscribe = buttonSubscribe.length
@@ -138,11 +138,25 @@ export default {
                 this.$toast.open({message: "Falha ao obter leads", type: "error"})
             }
         },
-        async deleteLeadByIdAssync() {
+        async getLeadByIdAsync(leadId) {
             try {
                 this.$axios.setHeader('apikey', process.env.SUPABASE_API_KEY)
-                await this.$axios.delete(`leads?id${this.deleteById}`)
-                this.$toast.open({ message: "Lead deletado com sucesso!", type: "success" })
+                const { data } = await this.$axios.get(`leads?id=eq.${leadId}`)
+                return data
+            } catch (err) {
+                this.$toast.open({message: "Falha ao obter lead", type: "error"})
+            }
+        },
+        async deleteLeadByIdAssync() {
+            try {
+                const lead = await this.getLeadByIdAsync(this.deleteById)
+                if(lead.length === 0) {
+                    this.$toast.open({message: "Esse Id não existe.", type: "warning"})
+                    return
+                }
+                this.$axios.setHeader('apikey', process.env.SUPABASE_API_KEY)
+                await this.$axios.delete(`leads?id=eq.${this.deleteById}`)
+                this.$toast.open({ message: `Lead ${lead[0].name} deletado com sucesso!`, type: "success" })
                 this.update(false)
                 this.deleteById = '';
                 this.dialog = false;

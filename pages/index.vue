@@ -57,6 +57,7 @@
           :is-subscribed="isSubscribed"
           @chosedState="getAndSetStaticCities"
           @submitForm="handleSubmit"
+          @clickSubscribe="sendAnalyticsData"
         />
 
         <p v-if="isSubscribed" class="page-content__subscribed-m mt-4">
@@ -129,6 +130,7 @@
           :is-subscribed="isSubscribed"
           @chosedState="getAndSetStaticCities"
           @submitForm="handleSubmit"
+          @clickSubscribe="sendAnalyticsData"
         />
 
         <p v-if="isSubscribed" class="page-content__subscribed-w">
@@ -206,11 +208,11 @@ export default {
   },
   mounted() {
     this.getAndSetStaticStates();
-    // this.sendAnalyticsData()
+    setTimeout(() => this.sendAnalyticsData(),3000)
   },
   methods: {
     subscribe() {
-      // this.sendAnalyticsData('button_subscribe')
+      this.sendAnalyticsData('button_subscribe')
       this.showButton = false
     },
     formatDataFromIbge(states) {
@@ -267,7 +269,7 @@ export default {
       try {
         const deviceType = this.smAndDown ? 'mobile' : 'web'
         this.$axios.setHeader('apikey', process.env.SUPABASE_API_KEY)
-        this.$axios.post('analytics', { type: typeData, device: deviceType })
+        this.$axios.post('analytics', { type: typeData, device: deviceType, edition: ACTUAL_EMBAIXADORES_EVENT })
       } catch (err) {
         console.error(err)
       }

@@ -275,6 +275,7 @@ export default {
         subscribe() {
             this.showButton = false
             this.dialog = true
+            this.$emit('clickSubscribe','click_subscribe')
         },
         submit(pageType) {
             this.$v.$touch()
