@@ -62,17 +62,19 @@
                             ></v-select>
                         </v-col>
                         <v-col cols="8">
-                            <v-select
+                            <v-autocomplete
                                 v-model="form.city"
-                                :items="cities"
-                                item-text="value"
-                                :disabled="cities.length == 0"
                                 label="Cidade"
                                 placeholder="Selecione sua cidade"
+                                :items="cities"
                                 :error-messages="cityErrors"
-                                filled
+                                :disabled="cities.length == 0"
+                                item-text="value"
+                                hide-no-data
                                 dense
-                            ></v-select>
+                                filled
+                                clearable
+                            ></v-autocomplete>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -145,7 +147,7 @@
                         filled
                         dense
                     ></v-select>
-                    <v-select
+                    <!-- <v-select
                         v-model="form.city"
                         :items="cities"
                         item-text="value"
@@ -155,7 +157,20 @@
                         :error-messages="cityErrors"
                         filled
                         dense
-                    ></v-select>
+                    ></v-select> -->
+                    <v-autocomplete
+                        v-model="form.city"
+                        label="Cidade"
+                        placeholder="Selecione sua cidade"
+                        :items="cities"
+                        :error-messages="cityErrors"
+                        :disabled="cities.length == 0"
+                        item-text="value"
+                        hide-no-data
+                        dense
+                        filled
+                        clearable
+                    ></v-autocomplete>
                 </v-container>
 
                 <button
